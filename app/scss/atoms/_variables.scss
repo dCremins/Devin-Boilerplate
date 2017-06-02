@@ -1,10 +1,8 @@
 // Colors
-$black:                  #000;
-$white:                  #fff;
 
 $brand-color:            #415865 !default;
-$secondary-color:        #7A9EB1 !default;
-$accent-color:           #F9F8EB !default;
+$secondary-color:        #7a9eb1 !default;
+$accent-color:           #f9f8eb !default;
 $text:                   #000 !default;
 $container-color:        $accent-color;
 
@@ -24,12 +22,15 @@ $secondary-inverse:      color-compliance($secondary-color, $text);
 @mixin linx ($link, $visit, $hover, $active) {
   a {
     color: $link;
+
     &:visited {
       color: $visit;
     }
+
     &:hover {
       color: $hover;
     }
+
     &:active {
       color: $active;
     }

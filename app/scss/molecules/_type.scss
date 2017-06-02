@@ -18,26 +18,31 @@ h1 {
   font-size: ms(6);
   margin: ms(-8) auto;
 }
+
 h2 {
   @extend %headers;
   font-size: ms(5);
   margin: ms(-6) auto;
 }
+
 h3 {
   @extend %headers;
   font-size: ms(4);
   margin: ms(-4) auto;
 }
+
 h4 {
   @extend %headers;
   font-size: ms(3);
   margin: ms(-2) auto;
 }
+
 h5 {
   @extend %headers;
   font-size: ms(2);
   margin: ms(0) auto;
 }
+
 h6 {
   @extend %headers;
   font-size: ms(1);

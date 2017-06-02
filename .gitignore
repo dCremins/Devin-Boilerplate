@@ -1,1 +1,11 @@
+# .gitignore is a file used for github repositories
+# in order to specify files to ignore
+# or in other words exclude from the repository
+
+# Since node modules can be added by running yarn or npm update
+# and the folder is usually very large, I tend to exclude them from
+# my repository
 node_modules/*
+# the /* means "all files and folders in this folder"
+.DS_Store
+# This is a dumb file MacOSx makes that does nothing and I hate it

@@ -1,3 +1,7 @@
+# This is a lint file from AirBnB
+# Linting flags your code based on a series of rule
+# you set up here in order to maintain standards
+
 severity: error
 
 linters:
@@ -13,7 +17,7 @@ linters:
     enabled: false
 
   ExtendDirective:
-    enabled: true
+    enabled: false
 
   LeadingZero:
     enabled: false

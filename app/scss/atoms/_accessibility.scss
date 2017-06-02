@@ -1,12 +1,14 @@
 
-@import 'math-pow';
-//@debug poly-pow(9, 0.5); // =3 across different sass variants
+@import "math-pow";
+
+$black:  #000;
+$white:  #fff;
 
 @function luminance($color) {
   $colors: (
-    'red': red($color),
-    'green': green($color),
-    'blue': blue($color)
+    "red": red($color),
+    "green": green($color),
+    "blue": blue($color)
   );
 
   @each $name, $value in $colors {
@@ -23,8 +25,8 @@
     $colors: map-merge($colors, ($name: $value));
   }
 
-  $results: (map-get($colors, 'red') * .2126);
-  $results: $results + (map-get($colors, 'green') * .7152) + (map-get($colors, 'blue') * .0722);
+  $results: (map-get($colors, "red") * .2126);
+  $results: $results + (map-get($colors, "green") * .7152) + (map-get($colors, "blue") * .0722);
   @return  $results;
 }
 
@@ -51,7 +53,7 @@
       $contrast: ($lum-b + .05) / ($lum-a + .05);
     }
     @if $i > 10 {
-      @warn 'Infinite Loop, Contrast: #{$contrast}';
+      @warn "Infinite Loop, Contrast: #{$contrast}";
       @return $new-text;
     }
   }
@@ -62,7 +64,7 @@
 
 @function alter-color($lum, $color) {
   @if $lum < .15 {
-    @return #fff;
+    @return $white;
   } @elseif $lum > .3 {
     $new-color: darken($color, 10%);
     @return $new-color;

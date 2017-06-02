@@ -12,39 +12,20 @@ body {
   header,
   footer {
     background-color: $secondary-color;
-    flex-shrink: 0; /* 2 */
+    flex-shrink: 0; // 2
   }
 
   main {
     background-color: $container-color;
-    flex: 1 0 auto; /* 2 */
+    flex: 1 0 auto; // 2
     width: 100%;
 
     &::after {
-      content: '\00a0'; /* &nbsp; */
+      content: "\00a0"; // &nbsp;
       display: block;
       margin-top: var(--space);
-      height: 0px;
+      height: 0;
       visibility: hidden;
     }
-  }
-
-  .container {
-    margin: 0 auto;
-    padding: 20px 30px;
-    width: 100%;
-
-    @include breakpoint(700px) {
-      width: 80%;
-    }
-  }
-}
-// Flex Boxes
-.flex {
-  display: flex;
-  flex-flow: row wrap;
-
-  .column {
-    flex: 1;
   }
 }

@@ -1,0 +1,19 @@
+.container {
+  margin: 0 auto;
+  padding: 20px 30px;
+  width: 100%;
+
+  @include breakpoint(700px) {
+    width: 80%;
+  }
+}
+
+// Flex Boxes
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+
+  .column {
+    flex: 1;
+  }
+}

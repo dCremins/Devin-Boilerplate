@@ -5,14 +5,24 @@
 
 // For Media Queries
 // http://breakpoint-sass.com/
-@import 'breakpoint';
+@import "breakpoint";
 
 // For Modular Font Sizing
 // http://www.modularscale.com/
-@import 'modularscale';
+@import "modularscale";
 
-@import 'partials/accessibility';
-@import 'partials/variables';
-@import 'partials/base';
-@import 'partials/type';
-@import 'partials/nav';
+// The SCSS scructure is a variation on
+// Atomic Design by Brad Frost
+// http://bradfrost.com/blog/post/atomic-web-design/
+
+// Atoms are pieces of SCSS that only effect the styling indirectly
+@import "atoms/accessibility";
+@import "atoms/variables";
+
+// Molecules are base level styles
+@import "molecules/type";
+@import "molecules/base";
+
+// Organisms are particular instances of elements on a page
+@import "organisms/container";
+@import "organisms/nav";

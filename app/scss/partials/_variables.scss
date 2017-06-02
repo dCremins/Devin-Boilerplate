@@ -1,0 +1,46 @@
+// Colors
+$black:                  #000;
+$white:                  #fff;
+
+$brand-color:            #415865 !default;
+$secondary-color:        #7A9EB1 !default;
+$accent-color:           #F9F8EB !default;
+$text:                   #000 !default;
+$container-color:        $accent-color;
+
+// Accessibility Text Adjustments
+$text:                   color-compliance($accent-color, $text);
+$background-text:        color-compliance($container-color, $brand-color);
+$secondary-text:         color-compliance($secondary-color, $text);
+$header:                 color-compliance($container-color, $brand-color);
+$subtitle:               color-compliance($container-color, $secondary-color);
+
+$inverse:                color-compliance($accent-color, $text);
+$background-inverse:     color-compliance($container-color, $brand-color);
+$secondary-inverse:      color-compliance($secondary-color, $text);
+
+
+// Links
+@mixin linx ($link, $visit, $hover, $active) {
+  a {
+    color: $link;
+    &:visited {
+      color: $visit;
+    }
+    &:hover {
+      color: $hover;
+    }
+    &:active {
+      color: $active;
+    }
+  }
+}
+
+// Type
+$modularscale: (
+  base: 1em,
+  ratio: $minor-second
+);
+
+$base-font: 'Vollkorn', serif !default;
+$header-font:   'Unica One', cursive !default;

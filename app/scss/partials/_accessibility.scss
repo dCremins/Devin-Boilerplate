@@ -1,0 +1,73 @@
+
+@import 'math-pow';
+//@debug poly-pow(9, 0.5); // =3 across different sass variants
+
+@function luminance($color) {
+  $colors: (
+    'red': red($color),
+    'green': green($color),
+    'blue': blue($color)
+  );
+
+  @each $name, $value in $colors {
+    $adjusted: 0;
+    $value: $value / 255;
+
+    @if $value < .03928 {
+      $value: $value / 12.92;
+    } @else {
+      $value: ($value + .055) / 1.055;
+      $value: poly-pow($value, 2.4);
+    }
+
+    $colors: map-merge($colors, ($name: $value));
+  }
+
+  $results: (map-get($colors, 'red') * .2126);
+  $results: $results + (map-get($colors, 'green') * .7152) + (map-get($colors, 'blue') * .0722);
+  @return  $results;
+}
+
+@function color-compliance($base, $text) {
+  $lum-a: luminance($base);
+  $lum-b: luminance($text);
+  $new-text: $text;
+  $i: 0;
+  $contrast: 0;
+
+  @if $lum-a > $lum-b {
+    $contrast: ($lum-a + .05) / ($lum-b + .05);
+  } @else {
+    $contrast: ($lum-b + .05) / ($lum-a + .05);
+  }
+
+  @while $contrast < 4.5 {
+    $i: $i + 1;
+    $new-text: alter-color($lum-a, $new-text);
+    $lum-b: luminance($new-text);
+    @if $lum-a > $lum-b {
+      $contrast: ($lum-a + .05) / ($lum-b + .05);
+    } @else {
+      $contrast: ($lum-b + .05) / ($lum-a + .05);
+    }
+    @if $i > 10 {
+      @warn 'Infinite Loop, Contrast: #{$contrast}';
+      @return $new-text;
+    }
+  }
+
+  @return $new-text;
+
+}
+
+@function alter-color($lum, $color) {
+  @if $lum < .15 {
+    @return #fff;
+  } @elseif $lum > .3 {
+    $new-color: darken($color, 10%);
+    @return $new-color;
+  } @else {
+    $new-color: lighten($color, 10%);
+    @return $new-color;
+  }
+}

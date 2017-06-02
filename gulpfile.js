@@ -14,6 +14,9 @@ const $ = require('gulp-load-plugins')({
 // on the number of files you need to edit for each new site
 const pkg = require('./package.json');
 
+
+/* Development*/
+
 // Take all the scss files declared in package.json and convert them
 // to css with sourcemaps in the desired folder
 gulp.task('styles', () => {
@@ -30,7 +33,7 @@ gulp.task('styles', () => {
         .pipe($.sourcemaps.write(pkg.paths.dist.sourcemaps))
         .pipe(gulp.dest(pkg.paths.dist.css))
 // Reload the browser CSS after every change
-        .pipe(browserSync.reload({stream:true}));
+        .pipe($.browserSync.reload({stream:true}));
 });
 
 // Prepare Browser-sync for localhost
@@ -57,4 +60,43 @@ gulp.task('watch', ['styles', 'browser-sync'], function () {
     gulp.watch([pkg.paths.dist.base + '*.html', pkg.paths.dist.base + '*.php'], ['bs-reload']);
 });
 
-gulp.task('default', ['styles']);
+/* Production */
+
+gulp.task('bundle-js', () => {
+  return gulp.src(pkg.paths.dist.js + '*.js')
+    .pipe($.concat('bundle.js'))
+    .pipe($.minify({
+        	ext:{
+        		min:'.js'
+        	},
+        	noSource: true
+      }))
+    .pipe(gulp.dest(pkg.paths.public.js));
+});
+
+gulp.task('bundle-css', () => {
+  return gulp.src(pkg.paths.dist.css + '*.css')
+    .pipe($.concat('style.css'))
+    .pipe($.cleanCss())
+    .pipe(gulp.dest(pkg.paths.public.css));
+});
+
+gulp.task('bundle', ['bundle-css', 'bundle-js'], () => {
+  return gulp.src(pkg.paths.dist.base + '**/*.html').pipe(gulp.dest(pkg.paths.public.base));
+  return gulp.src(pkg.paths.dist.fonts + '**/*').pipe(gulp.dest(pkg.paths.public.fonts));
+  return gulp.src(pkg.paths.dist.img + '**/*').pipe(gulp.dest(pkg.paths.public.img));
+  return gulp.src(pkg.paths.dist.sourcemaps + '**/*').pipe(gulp.dest(pkg.paths.public.sourcemaps));
+});
+
+gulp.task('inject', ['bundle'], function () {
+  var css = gulp.src(pkg.paths.public.css + '*.css');
+  var js = gulp.src(pkg.paths.public.js + '*.js');
+  return gulp.src(pkg.paths.public.base +'index.html')
+    .pipe($.inject( css, { relative:true, selfClosingTag: true  }))
+    .pipe($.inject( js, { relative:true, selfClosingTag: true } ))
+    .pipe(gulp.dest(pkg.paths.public.base));
+});
+
+/* Default */
+
+gulp.task('default', ['bundle-css', 'bundle-js']);

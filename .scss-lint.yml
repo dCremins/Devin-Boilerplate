@@ -12,6 +12,9 @@ linters:
 
   BemDepth:
     enabled: true
+    
+  Comment:
+    enabled: false
 
   DeclarationOrder:
     enabled: false

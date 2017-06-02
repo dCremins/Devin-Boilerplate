@@ -1,8 +1,13 @@
-// Google Fonts
+/*
+** Base Styles
+*/
+
+/* Google Fonts */
 // Comment out if unused
 @import url('https://fonts.googleapis.com/css?family=Unica+One');
 @import url('https://fonts.googleapis.com/css?family=Vollkorn');
 
+/* Node Modules */
 // For Media Queries
 // http://breakpoint-sass.com/
 @import "breakpoint";
@@ -11,6 +16,7 @@
 // http://www.modularscale.com/
 @import "modularscale";
 
+/* Base */
 // The SCSS scructure is a variation on
 // Atomic Design by Brad Frost
 // http://bradfrost.com/blog/post/atomic-web-design/

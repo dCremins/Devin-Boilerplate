@@ -50,7 +50,7 @@ gulp.task('bs-reload', function () {
 // Watch scss, js and html files, doing different things with each.
 gulp.task('watch', ['styles', 'browser-sync'], function () {
 // Watch scss, run the styles task on change.
-    gulp.watch([pkg.paths.dist.scss + '*.scss', pkg.paths.dist.scss + '*/.scss'], ['styles'])
+    gulp.watch([pkg.paths.dist.scss + '*.scss', pkg.paths.dist.scss + '**/*.scss'], ['styles'])
 // Watch app.js file, run the scripts task on change.
     //gulp.watch([pkg.paths.dist.js + '*.js', pkg.paths.dist.js + '*/.js'], ['scripts'])
 // Watch .html and .php files, run the bs-reload task on change.

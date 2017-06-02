@@ -76,8 +76,16 @@ gulp.task('bundle-js', () => {
 
 gulp.task('bundle-css', () => {
   return gulp.src(pkg.paths.dist.css + '*.css')
-    .pipe($.concat('style.css'))
-    .pipe($.cleanCss())
+    .pipe($.sourcemaps.init())
+    .pipe($.cssimport())
+    .pipe($.cleanCss({
+            compatibility: "ie8",
+            keepSpecialComments : 0,
+            target: pkg.paths.public.css,
+            relativeTo: ""
+        }))
+    .pipe($.concat('style.css', {newLine: ""}))
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest(pkg.paths.public.css));
 });
 
@@ -85,7 +93,6 @@ gulp.task('bundle', ['bundle-css', 'bundle-js'], () => {
   return gulp.src(pkg.paths.dist.base + '**/*.html').pipe(gulp.dest(pkg.paths.public.base));
   return gulp.src(pkg.paths.dist.fonts + '**/*').pipe(gulp.dest(pkg.paths.public.fonts));
   return gulp.src(pkg.paths.dist.img + '**/*').pipe(gulp.dest(pkg.paths.public.img));
-  return gulp.src(pkg.paths.dist.sourcemaps + '**/*').pipe(gulp.dest(pkg.paths.public.sourcemaps));
 });
 
 gulp.task('inject', ['bundle'], function () {

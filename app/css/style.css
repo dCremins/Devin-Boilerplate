@@ -1,5 +1,11 @@
+/**
+* Base Styles
+*/
+/* Google Fonts */
 @import url("https://fonts.googleapis.com/css?family=Unica+One");
 @import url("https://fonts.googleapis.com/css?family=Vollkorn");
+/* Node Modules */
+/* Base */
 h1, h2, h3, h4, h5, h6 {
   color: #415865;
   font-family: "Unica One", cursive; }
@@ -141,4 +147,4 @@ nav {
     padding: 15px 20px;
     text-decoration: none; }
 
-/*# sourceMappingURL=maps/style.css.map */
+/*# sourceMappingURL=app/css/maps/style.css.map */

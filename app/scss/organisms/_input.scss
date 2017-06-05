@@ -1,0 +1,54 @@
+input,
+select {
+  appearance: none;
+  background-color: $white;
+  border: 1px solid $gray;
+  border-radius: 3px;
+  font-family: $base-font;
+  padding: ms(-9) ms(-12);
+  max-width: 100%;
+
+  &::placeholder {
+    color: $gray;
+  }
+}
+
+.input {
+  display: flex;
+  margin: 10px 0;
+
+  .search {
+    border-radius: 3px 0 0 3px;
+  }
+}
+
+.select {
+  position: relative;
+  padding: ms(-10) 0;
+
+  select {
+    padding-right: 2em;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    width: 2em;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 0 3px 3px 0;
+  }
+
+  &::after {
+    color: $secondary-color;
+    content: "\25BC";
+    font-size: ms(-4);
+    position: absolute;
+    pointer-events: none;
+    right: 8px;
+    top: 50%;
+    margin-top: -4px;
+  }
+}

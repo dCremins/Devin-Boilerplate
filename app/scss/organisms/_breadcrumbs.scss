@@ -1,0 +1,18 @@
+.breadcrumb {
+  background-color: darken($container-color, 5%);
+  border-radius: 4px;
+  color: lighten($secondary-text, 10%);
+  list-style: none;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+
+  >li {
+    display: inline-block;
+
+    + li::before {
+      padding: 0 5px;
+      color: lighten($secondary-text, 10%);
+      content: "/\00a0";
+    }
+  }
+}

@@ -106,11 +106,13 @@ gulp.task('bs-reload', function () {
     browserSync.reload();
 });
 
+gulp.task('html-reload', ['publish-html'], function () {
+    browserSync.reload();
+});
+
 // Watch scss, js and html files, doing different things with each.
-gulp.task('watch', ['inject-html', 'browser-sync'], function () {
-    gulp.watch([
-      pkg.paths.development.base + '**/*'
-    ], ['inject-html', 'bs-reload']);
+gulp.task('watch', ['publish-html', 'browser-sync'], function () {
+    gulp.watch([pkg.paths.development.base + '**/*'], ['html-reload']);
 });
 /* Default */
 

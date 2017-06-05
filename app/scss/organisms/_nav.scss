@@ -25,7 +25,6 @@ nav {
     }
   }
 
-  @include linx($accent-color, $brand-color, $brand-color, $brand-color);
   a {
     display: block;
     padding: 15px 20px;

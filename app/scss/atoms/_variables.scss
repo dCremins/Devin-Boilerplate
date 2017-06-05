@@ -1,25 +1,28 @@
 // Colors
 
-$brand-color:            #415865 !default;
-$secondary-color:        #7a9eb1 !default;
-$accent-color:           #f9f8eb !default;
+$brand-color:            #5e616a !default;
+$secondary-color:        #e8aa8c !default;
+$accent-color:           #f9f3e6 !default;
 $text:                   #000 !default;
-$container-color:        $accent-color;
+$gray:                   lighten($black, 80%);
+$container-color:        $accent-color !default;
 
 // Accessibility Text Adjustments
-$text:                   color-compliance($accent-color, $text);
-$background-text:        color-compliance($container-color, $brand-color);
-$secondary-text:         color-compliance($secondary-color, $text);
-$header:                 color-compliance($container-color, $brand-color);
-$subtitle:               color-compliance($container-color, $secondary-color);
+$text:                   color-compliance($container-color, $text);
+$brand-text:             color-compliance($container-color, $brand-color);
+$secondary-text:         color-compliance($container-color, $secondary-color);
 
-$inverse:                color-compliance($accent-color, $text);
-$background-inverse:     color-compliance($container-color, $brand-color);
-$secondary-inverse:      color-compliance($secondary-color, $text);
+$inverse:                color-compliance($text, $container-color);
+$brand-inverse:          color-compliance($brand-color, $container-color);
+$secondary-inverse:      color-compliance($secondary-color, $container-color);
+
+$header:                 color-compliance($secondary-color, $brand-color);
+$subtitle:               $secondary-text;
+$link-color:             color-compliance($secondary-color, $accent-color);
 
 
 // Links
-@mixin linx ($link, $visit, $hover, $active) {
+@mixin linx ($link:$link-color, $visit:$header, $hover:$header, $active:$header) {
   a {
     color: $link;
 
@@ -43,13 +46,13 @@ $modularscale: (
   ratio: $minor-second
 );
 
-$base-font: 'Vollkorn', serif !default;
+$base-font:     'Vollkorn', serif !default;
 $header-font:   'Unica One', cursive !default;
 
 // Breakpoints
-$phone-portrait: 320px;
+$phone-portrait:  320px;
 $phone-landscape: 480px;
-$tablets: 600px;
-$tablet-wide: 780px;
-$desktop: 1024px;
-$desktop-wide: 1300px;
+$tablets:         600px;
+$tablet-wide:     780px;
+$desktop:         1024px;
+$desktop-wide:    1300px;

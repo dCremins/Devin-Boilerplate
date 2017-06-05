@@ -6,12 +6,13 @@
 body,
 a,
 p {
+  color: $text;
   font-family: $base-font;
   font-size: ms(0);
 }
 
 // Main Link Style
-@include linx($secondary-color, $brand-color, $brand-color, $brand-color);
+@include linx();
 
 h1 {
   @extend %headers;

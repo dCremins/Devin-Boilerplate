@@ -20,8 +20,8 @@ const pkg = require('./package.json');
 // Take all the scss files declared in package.json and convert them
 // to css with sourcemaps in the desired folder
 gulp.task('styles', () => {
-    $.fancyLog("-> Compiling scss: " + pkg.paths.dist.scss + pkg.vars.scssName);
-    return gulp.src(pkg.paths.dist.scss + pkg.vars.scssName)
+    $.fancyLog("-> Compiling scss: " + pkg.paths.development.scss + pkg.vars.scssName);
+    return gulp.src(pkg.paths.development.scss + pkg.vars.scssName)
         .pipe($.plumber())
         .pipe($.sourcemaps.init())
         .pipe($.sass({
@@ -30,17 +30,73 @@ gulp.task('styles', () => {
             .on('error', $.sass.logError))
         .pipe($.cached('sass_compile'))
         .pipe($.autoprefixer())
-        .pipe($.sourcemaps.write(pkg.paths.dist.sourcemaps))
-        .pipe(gulp.dest(pkg.paths.dist.css))
-// Reload the browser CSS after every change
-        .pipe($.browserSync.reload({stream:true}));
+        .pipe($.sourcemaps.write(pkg.paths.development.sourcemaps))
+        .pipe(gulp.dest(pkg.paths.development.css));
 });
+
+
+
+/* Production */
+
+gulp.task('bundle-js', () => {
+  return gulp.src(pkg.paths.development.js + '*.js')
+    .pipe($.concat('bundle.js'))
+    .pipe($.minify({
+        	ext:{
+        		min:'.js'
+        	},
+        	noSource: true
+      }))
+    .pipe(gulp.dest(pkg.paths.html.js));
+});
+
+gulp.task('bundle-css', ['styles'], () => {
+  return gulp.src(pkg.paths.development.css + '*.css')
+    .pipe($.sourcemaps.init())
+    .pipe($.cssimport())
+    .pipe($.cleanCss({
+            compatibility: "ie8",
+            keepSpecialComments : 0,
+            target: pkg.paths.html.css,
+            relativeTo: ""
+        }))
+    .pipe($.concat('style.css', {newLine: ""}))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest(pkg.paths.html.css));
+});
+
+gulp.task('bundle-html', function () {
+    return gulp.src(pkg.paths.development.base + 'pages/html/*.html')
+        .pipe($.htmlImport(pkg.paths.development.base + 'templates/html/'))
+        .pipe(gulp.dest(pkg.paths.html.base));
+})
+
+gulp.task('bundle-php', function () {
+    return gulp.src(pkg.paths.development.base + 'pages/php/*.php')
+        .pipe($.htmlImport(pkg.paths.development.base + 'templates/php/'))
+        .pipe(gulp.dest(pkg.paths.php.base));
+})
+
+gulp.task('bundle-assets', () => {
+  return gulp.src(pkg.paths.development.fonts + '**/*').pipe(gulp.dest(pkg.paths.html.fonts));
+  return gulp.src(pkg.paths.development.img + '**/*').pipe(gulp.dest(pkg.paths.html.img));
+});
+
+gulp.task('publish-html', ['bundle-css', 'bundle-js', 'bundle-html', 'bundle-assets'], function () {
+  var css = gulp.src(pkg.paths.html.css + '*.css');
+  var js = gulp.src(pkg.paths.html.js + '*.js');
+  return gulp.src(pkg.paths.html.base +'*.html')
+    .pipe($.inject( css, { relative:true, selfClosingTag: true  }))
+    .pipe($.inject( js, { relative:true, selfClosingTag: true } ))
+    .pipe(gulp.dest(pkg.paths.html.base));
+});
+
 
 // Prepare Browser-sync for localhost
 gulp.task('browser-sync', function() {
     browserSync.init(['css//.css', 'js//.js'], {
         server: {
-            baseDir: pkg.paths.dist.base
+            baseDir: pkg.paths.html.base
         }
     });
 });
@@ -51,59 +107,11 @@ gulp.task('bs-reload', function () {
 });
 
 // Watch scss, js and html files, doing different things with each.
-gulp.task('watch', ['styles', 'browser-sync'], function () {
-// Watch scss, run the styles task on change.
-    gulp.watch([pkg.paths.dist.scss + '*.scss', pkg.paths.dist.scss + '**/*.scss'], ['styles'])
-// Watch app.js file, run the scripts task on change.
-    //gulp.watch([pkg.paths.dist.js + '*.js', pkg.paths.dist.js + '*/.js'], ['scripts'])
-// Watch .html and .php files, run the bs-reload task on change.
-    gulp.watch([pkg.paths.dist.base + '*.html', pkg.paths.dist.base + '*.php'], ['bs-reload']);
+gulp.task('watch', ['inject-html', 'browser-sync'], function () {
+    gulp.watch([
+      pkg.paths.development.base + '**/*'
+    ], ['inject-html', 'bs-reload']);
 });
-
-/* Production */
-
-gulp.task('bundle-js', () => {
-  return gulp.src(pkg.paths.dist.js + '*.js')
-    .pipe($.concat('bundle.js'))
-    .pipe($.minify({
-        	ext:{
-        		min:'.js'
-        	},
-        	noSource: true
-      }))
-    .pipe(gulp.dest(pkg.paths.public.js));
-});
-
-gulp.task('bundle-css', () => {
-  return gulp.src(pkg.paths.dist.css + '*.css')
-    .pipe($.sourcemaps.init())
-    .pipe($.cssimport())
-    .pipe($.cleanCss({
-            compatibility: "ie8",
-            keepSpecialComments : 0,
-            target: pkg.paths.public.css,
-            relativeTo: ""
-        }))
-    .pipe($.concat('style.css', {newLine: ""}))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(pkg.paths.public.css));
-});
-
-gulp.task('bundle', ['bundle-css', 'bundle-js'], () => {
-  return gulp.src(pkg.paths.dist.base + '**/*.html').pipe(gulp.dest(pkg.paths.public.base));
-  return gulp.src(pkg.paths.dist.fonts + '**/*').pipe(gulp.dest(pkg.paths.public.fonts));
-  return gulp.src(pkg.paths.dist.img + '**/*').pipe(gulp.dest(pkg.paths.public.img));
-});
-
-gulp.task('inject', ['bundle'], function () {
-  var css = gulp.src(pkg.paths.public.css + '*.css');
-  var js = gulp.src(pkg.paths.public.js + '*.js');
-  return gulp.src(pkg.paths.public.base +'index.html')
-    .pipe($.inject( css, { relative:true, selfClosingTag: true  }))
-    .pipe($.inject( js, { relative:true, selfClosingTag: true } ))
-    .pipe(gulp.dest(pkg.paths.public.base));
-});
-
 /* Default */
 
 gulp.task('default', ['bundle-css', 'bundle-js']);

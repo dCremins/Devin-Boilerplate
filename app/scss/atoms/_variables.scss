@@ -45,3 +45,11 @@ $modularscale: (
 
 $base-font: 'Vollkorn', serif !default;
 $header-font:   'Unica One', cursive !default;
+
+// Breakpoints
+$phone-portrait: 320px;
+$phone-landscape: 480px;
+$tablets: 600px;
+$tablet-wide: 780px;
+$desktop: 1024px;
+$desktop-wide: 1300px;

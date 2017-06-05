@@ -1,0 +1,25 @@
+// Flex Boxes
+
+
+.flex {
+  display: block;
+  flex: 1 1 auto;
+
+  @include breakpoint($tablet-wide) {
+    display: flex;
+  }
+
+  &.row {
+    flex-flow: column;
+  }
+
+  &.column {
+    flex-flow: row;
+  }
+}
+
+.color {
+  background-color: $brand-color;
+  margin: 10px;
+  padding: 20px;
+}

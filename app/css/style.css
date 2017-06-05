@@ -1,5 +1,5 @@
-/**
-* Base Styles
+/*
+** Base Styles
 */
 /* Google Fonts */
 @import url("https://fonts.googleapis.com/css?family=Unica+One");
@@ -58,6 +58,12 @@ body {
   height: 100%;
   width: 100%; }
 
+*,
+*::after,
+*::before {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
 body {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -84,6 +90,32 @@ body {
       height: 0;
       visibility: hidden; }
 
+.flex {
+  display: block;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto; }
+  @media (min-width: 780px) {
+    .flex {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; } }
+  .flex.row {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column;
+            flex-flow: column; }
+  .flex.column {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: row;
+            flex-flow: row; }
+
+.color {
+  background-color: #415865;
+  margin: 10px;
+  padding: 20px; }
+
 .container {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -93,19 +125,6 @@ body {
   @media (min-width: 700px) {
     .container {
       width: 80%; } }
-
-.flex {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: horizontal;
-  -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap; }
-  .flex .column {
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1; }
 
 nav {
   -webkit-box-sizing: border-box;
@@ -147,4 +166,4 @@ nav {
     padding: 15px 20px;
     text-decoration: none; }
 
-/*# sourceMappingURL=app/css/maps/style.css.map */
+/*# sourceMappingURL=maps/style.css.map */

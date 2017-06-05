@@ -7,7 +7,7 @@
     "license": "MIT",
     "private": true,
     "paths": {
-        "dist": {
+        "development": {
             "base": "app/",
             "css": "app/css/",
             "scss": "app/scss/",
@@ -16,13 +16,21 @@
             "img": "app/img/",
             "sourcemaps": "./maps/"
         },
-        "public": {
-            "base": "dist/",
-            "css": "dist/css/",
-            "sourcemaps": "dist/css/maps/",
-            "js": "dist/js/",
-            "fonts": "dist/fonts/",
-            "img": "dist/img/"
+        "html": {
+            "base": "dist/html-boilerplate/",
+            "css": "dist/html-boilerplate/css/",
+            "sourcemaps": "dist/html-boilerplate/css/maps/",
+            "js": "dist/html-boilerplate/js/",
+            "fonts": "dist/html-boilerplate/fonts/",
+            "img": "dist/html-boilerplate/img/"
+        },
+        "php": {
+            "base": "dist/php-boilerplate/",
+            "css": "dist/php-boilerplate/css/",
+            "sourcemaps": "dist/php-boilerplate/css/maps/",
+            "js": "dist/php-boilerplate/js/",
+            "fonts": "dist/php-boilerplate/fonts/",
+            "img": "dist/php-boilerplate/img/"
         },
         "scss": [
             "./node_modules/breakpoint-sass/stylesheets/",
@@ -62,6 +70,7 @@
         "gulp-clean-css": "^3.4.1",
         "gulp-concat": "^2.6.1",
         "gulp-cssimport": "^5.0.0",
+        "gulp-html-import": "^0.0.2",
         "gulp-inject": "^4.2.0",
         "gulp-load-plugins": "^1.3.0",
         "gulp-minify": "^1.0.0",
